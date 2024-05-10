@@ -3,14 +3,19 @@
 def converter(string):
     # user_input = "B"
     user_input = string.strip()
-    user_input_lst = user_input.split(" ")
     checker_returned = check_inputs(user_input)
     if (not checker_returned[0]):
         return checker_returned
-
-    # print('(' + character + '-' + num+')')
-    # print('200', num)
-    return [True, '200 '+str(555)]
+    character, num = user_input.split(" ")
+    num = int(num)
+    num_after_converted = 0
+    # To Binary
+    if (character == 'B'):
+        num_after_converted = str(bin(num))[2:]
+    # To Binary
+    if (character == 'H'):
+        num_after_converted = hex(num)
+    return [True, '200 ' + str(num_after_converted)]
 
 
 def main():
