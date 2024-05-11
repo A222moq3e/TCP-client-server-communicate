@@ -7,14 +7,14 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 s.bind((IP, PORT))
 s.listen(5)
-print('listening....')
+# print('listening....')
 
 
 def main():
     while True:
         clientsocket, address = s.accept()
         try:
-            print(f"Connection from {address} has been establish!")
+            # print(f"Connection from {address} has been establish!")
             msg = "Welcom to our server"
             # Add Header
             # msg = f"{len(msg):<{HEADERSIZE}}" + msg
@@ -28,7 +28,8 @@ def main():
                     break
                 clientsocket.send(bytes(output, "utf-8"))
         except:
-            print(f'closed Connection by force from {address}')
+            # print(f'closed Connection by force from {address}')
+            pass
 
 # letter => character , num => number
 
