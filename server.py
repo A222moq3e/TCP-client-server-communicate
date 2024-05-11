@@ -13,25 +13,28 @@ print('listening....')
 def main():
     while True:
         clientsocket, address = s.accept()
-        print(f"Connection from {address} has been establish!")
-        msg = "Welcom to our server"
-        # Add Header
-        # msg = f"{len(msg):<{HEADERSIZE}}" + msg
-        clientsocket.send(bytes(msg, "utf-8"))
-        while True:
-            clientsocket.send(bytes('Enter Input:', "utf-8"))
-            recived_msg = clientsocket.recv(256)
-            output = startProgram(recived_msg.decode("utf-8"))
-            if (output == 'Quit'):
-                clientsocket.close()
-                break
-            clientsocket.send(bytes(output, "utf-8"))
+        try:
+            print(f"Connection from {address} has been establish!")
+            msg = "Welcom to our server"
+            # Add Header
+            # msg = f"{len(msg):<{HEADERSIZE}}" + msg
+            clientsocket.send(bytes(msg, "utf-8"))
+            while True:
+                clientsocket.send(bytes('Enter Input:', "utf-8"))
+                recived_msg = clientsocket.recv(256)
+                output = startProgram(recived_msg.decode("utf-8"))
+                if (output == 'Quit'):
+                    clientsocket.close()
+                    break
+                clientsocket.send(bytes(output, "utf-8"))
+        except:
+            print(f'closed Connection by force from {address}')
 
 # letter => character , num => number
 
 
-def converter(string):
-    user_input = string.strip()
+def converter(inp):
+    user_input = inp.strip()
     checker_returned = check_inputs(user_input)
     if (not checker_returned[0]):
         return checker_returned

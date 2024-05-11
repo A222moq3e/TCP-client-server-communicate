@@ -4,21 +4,23 @@ HEADERSIZE = 10
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 IP = socket.gethostname()
 PORT = 1888
-
-s.connect((IP, 1888))
-
+try:
+    s.connect((IP, 1888))
+except:
+    print('Server is down, please try later.”')
+    exit()
 print(s.recv(128))
 
 while True:
     print(s.recv(128))
-    s.send(input().encode("utf-8"))
+    s.send((input() + " ").encode("utf-8"))
     # s.send("hi".encode("utf-8"))
     msg = s.recv(128)
     if (len(msg) <= 0):
         break
     print(msg.decode("utf-8"))
 
-
+s.close()
 # while True:
 #     full_msg = ''
 #     new_msg = True

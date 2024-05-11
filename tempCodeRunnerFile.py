@@ -1,2 +1,2 @@
 
-s.connect((IP, 1888))
+                break
