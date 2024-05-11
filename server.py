@@ -1,7 +1,36 @@
+import socket
+
+HEADERSIZE = 10
+IP = socket.gethostname()
+PORT = 1888
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+s.bind((IP, PORT))
+s.listen(5)
+print('listening....')
+
+
+def main():
+    while True:
+        clientsocket, address = s.accept()
+        print(f"Connection from {address} has been establish!")
+        msg = "Welcom to our server"
+        # Add Header
+        # msg = f"{len(msg):<{HEADERSIZE}}" + msg
+        clientsocket.send(bytes(msg, "utf-8"))
+        while True:
+            clientsocket.send(bytes('Enter Input:', "utf-8"))
+            recived_msg = clientsocket.recv(256)
+            output = startProgram(recived_msg.decode("utf-8"))
+            if (output == 'Quit'):
+                clientsocket.close()
+                break
+            clientsocket.send(bytes(output, "utf-8"))
+
+# letter => character , num => number
 
 
 def converter(string):
-    # user_input = "B"
     user_input = string.strip()
     checker_returned = check_inputs(user_input)
     if (not checker_returned[0]):
@@ -18,14 +47,13 @@ def converter(string):
     return [True, '200 ' + str(num_after_converted)]
 
 
-def main():
-    while (True):
-        usr_inp = input("please enter your input:")
-        usr_inp = usr_inp.strip()
-        data = converter(usr_inp)
-        if (data[1] == 'Quit'):
-            break
-        print(data[1])
+def startProgram(inp):
+    # usr_inp = input("please enter your input:")
+    usr_inp = inp
+    usr_inp = usr_inp.strip()
+    data = converter(usr_inp)
+    # print(data[1])
+    return data[1]
 
 
 def check_inputs(user_input):
@@ -53,3 +81,15 @@ main()
 # converter("B 22")  # True input
 # converter("G 22")
 # converter("B 22 55")
+
+
+# def main(inp):
+#     while (True):
+#         # usr_inp = input("please enter your input:")
+#         usr_inp = inp
+#         usr_inp = usr_inp.strip()
+#         data = converter(usr_inp)
+#         if (data[1] == 'Quit'):
+#             break
+#         # print(data[1])
+#         return data[1]

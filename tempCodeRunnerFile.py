@@ -1,2 +1,2 @@
-if(len(user_input_lst) == 1):
-#     if()
+
+s.connect((IP, 1888))
