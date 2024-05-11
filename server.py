@@ -1,7 +1,8 @@
 import socket
 
 HEADERSIZE = 10
-IP = socket.gethostname()
+# IP = socket.gethostname()
+IP = "0.0.0.0"  # Accept Request from anywhere
 PORT = 1888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
