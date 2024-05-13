@@ -1,6 +1,6 @@
 import socket
 
-# HEADERSIZE = 10
+
 # IP = socket.gethostname()
 IP = "0.0.0.0"  # Accept Request from anywhere
 PORT = 1888
@@ -10,23 +10,26 @@ s.bind((IP, PORT))
 s.listen(5)
 # print('listening....')
 
+#  here program will start working
+
 
 def main():
     while True:
         clientsocket, address = s.accept()
         try:
             # print(f"Connection from {address} has been establish!")
-            msg = "Welcom to our server"
-            # Add Header
-            # msg = f"{len(msg):<{HEADERSIZE}}" + msg
+            msg = "Welcom To Our Server :)"
             clientsocket.send(bytes(msg, "utf-8"))
             while True:
+                # Send question to request from client
                 clientsocket.send(bytes('Enter Input:', "utf-8"))
+                # Wait to recive message from client
                 recived_msg = clientsocket.recv(256)
-                output = startProgram(recived_msg.decode("utf-8"))
+                output = converter(recived_msg.decode("utf-8"))
                 if (output == 'Quit'):
                     clientsocket.close()
                     break
+                # send value for converted valeus (if 200) with status code and message
                 clientsocket.send(bytes(output, "utf-8"))
         except:
             # print(f'closed Connection by force from {address}')
@@ -40,7 +43,9 @@ def main():
 def converter(inp):
     user_input = inp.strip()
     checker_returned = check_inputs(user_input)
+    # When checker is False
     if (not checker_returned[0]):
+        # return when 300, 400, 500 status codesW
         return checker_returned
     character, num = user_input.split(" ")
     num = int(num)
@@ -48,16 +53,10 @@ def converter(inp):
     # To Binary
     if (character == 'B'):
         num_after_converted = str(bin(num))[2:]
-    # To Binary
+    # To Hexadicmal
     if (character == 'H'):
         num_after_converted = str(hex(num))[2:]
-    return [True, '200 ' + str(num_after_converted)]
-
-
-def startProgram(inp):
-    usr_inp = inp.strip()
-    data = converter(usr_inp)
-    return data[1]
+    return '200 ' + num_after_converted
 
 
 # Check if its is a correct Inputs
