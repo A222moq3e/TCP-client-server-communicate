@@ -1,8 +1,8 @@
 import socket
 
 HEADERSIZE = 10
-# IP = socket.gethostname()
-IP = "0.0.0.0"  # Accept Request from anywhere
+IP = socket.gethostname()
+# IP = "0.0.0.0"  # Accept Request from anywhere
 PORT = 1888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -34,6 +34,8 @@ def main():
 
 # letter => character , num => number
 
+# Converter to Binary or Hex
+
 
 def converter(inp):
     user_input = inp.strip()
@@ -48,19 +50,17 @@ def converter(inp):
         num_after_converted = str(bin(num))[2:]
     # To Binary
     if (character == 'H'):
-        num_after_converted = hex(num)
+        num_after_converted = str(hex(num))[2:]
     return [True, '200 ' + str(num_after_converted)]
 
 
 def startProgram(inp):
-    # usr_inp = input("please enter your input:")
-    usr_inp = inp
-    usr_inp = usr_inp.strip()
+    usr_inp = inp.strip()
     data = converter(usr_inp)
-    # print(data[1])
     return data[1]
 
 
+# Check if its is a correct Inputs
 def check_inputs(user_input):
     user_input_lst = user_input.split(" ")
     if (len(user_input) == 0):
@@ -86,15 +86,3 @@ main()
 # converter("B 22")  # True input
 # converter("G 22")
 # converter("B 22 55")
-
-
-# def main(inp):
-#     while (True):
-#         # usr_inp = input("please enter your input:")
-#         usr_inp = inp
-#         usr_inp = usr_inp.strip()
-#         data = converter(usr_inp)
-#         if (data[1] == 'Quit'):
-#             break
-#         # print(data[1])
-#         return data[1]
