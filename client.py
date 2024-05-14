@@ -15,7 +15,6 @@ print(s.recv(128).decode("utf-8"))
 while True:
     # recive Enter Input Message
     print(s.recv(128).decode("utf-8"))
-    
     s.send((input() + " ").encode("utf-8"))
     # s.send("hi".encode("utf-8"))
     msg = s.recv(128)
